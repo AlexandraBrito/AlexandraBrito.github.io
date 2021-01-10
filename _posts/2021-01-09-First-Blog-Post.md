@@ -6,4 +6,9 @@ category: Dev
 tags: [web, jekyll]
 ---
 
-My first Blog Post
+This is my first blog post in ths format.
+Now i'm trying to setup my tag and categories
+
+-category: Dev
+-tags: [web, jekyll]
+
