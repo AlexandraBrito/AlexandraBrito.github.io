@@ -12,10 +12,6 @@ title: Alexandra's Blog
 	{% endfor %}
 </ul>
 
-
-
-<!-- <h1 class="page-title" style="display:inline-block;"> {{ page.title }} </h1> -->
-
 <div style="display:inline-block;margin-left:.5em;">
 	Browse by <a href="/blog/category/">Category</a> or <a href="/blog/tag/">Tag</a>
 </div>
@@ -23,7 +19,7 @@ title: Alexandra's Blog
 <br /><br />
 
 <div class="posts">
-	{% for post in paginator.posts %}
+	{% for post in site.posts %}
 	<div class="post">
 		<h1 class="post-title">
 			<a href="{{ post.url }}">
