@@ -3,21 +3,27 @@ layout: post
 title: Alexandra's Blog
 ---
 
-<!-- 
-<ul class="posts">
 
+<ul class="posts">
 	{% for post in site.posts %}
+	{% if post.category != empty %}
+	|
+	{% for cat in post.category %}
+	<a class="codinfox-tag-mark" href="/blog/category">{{ cat }}</a>
+	{% endfor %}
+	{% endif %}
 	<li><span>{{ post.date | date_to_string }}</span> » <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title
 			}}</a></li>
 	{% endfor %}
-</ul> -->
+</ul>
+
 
 <div style="display:inline-block;margin-left:.5em;">
 	Browse by <a href="/blog/category/">Category</a> or <a href="/blog/tag/">Tag</a>
 </div>
 
 <br /><br />
-
+<!-- 
 <div class="posts">
 	{% for post in site.posts %}
 	<div class="post">
@@ -29,19 +35,19 @@ title: Alexandra's Blog
 
 		<span class="post-date">
 			{{ post.date | date_to_string }}
-			{% if post.tags != empty %}
+			{% if post.category != empty %}
 			|
-			{% for tag in post.tags %}
-			<a class="codinfox-tag-mark" href="/blog/tag/#{{ tag | slugify }}">{{ tag }}</a>
+			{% for cat in post.category %}
+			<a class="codinfox-tag-mark" href="/blog/category">{{ cat }}</a>
 			{% endfor %}
 			{% endif %}
 		</span>
 
 		{{ post.content | split:"
-		<!-- more -->" | first % }}
+		" | first % }}
 
 		<div class="codinfox-post-more">
-			<a href="{{ post.url }}#disqus_thread">Comment</a>&nbsp;
+			
 			<a href="{{ post.url }}">Read more</a>
 		</div>
 		<hr />
@@ -49,6 +55,8 @@ title: Alexandra's Blog
 	</div>
 	{% endfor %}
 </div>
+
+
 
 <div class="pagination">
 	{% if paginator.next_page %}
@@ -65,4 +73,4 @@ title: Alexandra's Blog
 	{% else %}
 	<span class="pagination-item newer">Newer</span>
 	{% endif %}
-</div>
+</div> -->
