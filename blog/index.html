@@ -7,7 +7,6 @@ title: Alexandra's Blog
 <ul class="posts">
 	{% for post in site.posts %}
 	{% if post.category != empty %}
-	|
 	{% for cat in post.category %}
 	<a class="codinfox-tag-mark" href="/blog/category">{{ cat }}</a>
 	{% endfor %}
