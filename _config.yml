@@ -3,7 +3,7 @@ title: Minimal Text
 baseurl: ""
 desc: A minimal blog for off-topic blog entries.
 about: I am a web developer, software engineer, and project manager currently living in Collinsville, Illinois. I'm a little weird but pretty friendly.
-image: https://pinto-light.glitch.me/?width=500&height=500&url=https://i.imgur.com/mxUVc2x.jpg&extension=jpg
+image: https://images.squarespace-cdn.com/content/v1/56437db0e4b0a6089932a7e8/1520272281743-CL6ITLSUYC2WTSQ1GQZW/ke17ZwdGBToddI8pDm48kIIhnbn4NfCVz67LUzzHJ6pZw-zPPgdn4jUwVcJE1ZvWhcwhEtWJXoshNdA9f1qD7WT60LcluGrsDtzPCYop9hMomUrVzqcG63pEoVX_dehvhUBbj0vIFICvsmtXbCPLnQ/Favicon-07.png
 excerpt_separator: "<!-- more -->"
 markdown: kramdown
 plugins:
@@ -12,7 +12,7 @@ exclude:
   - .jekyll-metadata
   - README.md
   - CNAME
-paginate: 1
+paginate: 5
 paginate_path: "/:num/"
 highlighter: rouge
 permalink: pretty
