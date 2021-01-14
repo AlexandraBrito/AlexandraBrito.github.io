@@ -12,7 +12,7 @@ exclude:
   - .jekyll-metadata
   - README.md
   - CNAME
-paginate: 5
+paginate: 3
 paginate_path: "/:num/"
 highlighter: rouge
 permalink: pretty
