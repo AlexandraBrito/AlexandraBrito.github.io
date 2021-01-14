@@ -1,31 +1,18 @@
 <!DOCTYPE html>
-<html>
-
-<head>
-	<title>{{ page.title }}</title>
-	<link rel="stylesheet" type="text/css" href="/css/main.css">
-</head>
-
-<body>
-	<nav>
-		<ul>
-			<li><a href="/">Home</a></li>
-			<li><a href="/about">About</a></li>
-			<li><a href="/cv">CV</a></li>
-			<li><a href="/blog">Blog</a></li>
-		</ul>
-	</nav>
-	<div class="container">
-
-		{{ content }}
-
-	</div><!-- /.container -->
-	<footer>
-		<ul>
-			<li><a href="mailto:alexandra95brito@gmail.com">alexandra95brito@gmail.com</a></li>
-			<li><a href="https://github.com/alexandrabrito">github.com/alexandrabrito</a></li>
-		</ul>
-	</footer>
-</body>
-
+<html lang="en" >
+    <head>
+        <meta charset="utf-8">
+        <title>
+            {% if post.title %}{{ post.title }}
+                •
+            {% else %}
+            {% endif %}{{ site.title }}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Cutive+Mono">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+        <link rel="stylesheet" href="{{ site.baseurl }}/css/style.css">
+    </head>
+    <body>
+        {{ content }}
+    </body>
 </html>
