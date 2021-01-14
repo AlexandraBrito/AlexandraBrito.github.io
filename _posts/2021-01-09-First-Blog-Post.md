@@ -2,7 +2,7 @@
 layout: post
 title: "Fist Blog Post"
 date: 2021-01-09
-category: Code
+categories: Code
 ---
 
 This is my first blog post in ths format.
