@@ -1,5 +1,5 @@
 body {
-  background-color: rgb(245, 245, 245);
+  background-color: rgb(241, 235, 235);
   color: #000;
   font-size: 1rem;
 }
@@ -36,12 +36,11 @@ hr {
 
 .container a {
   text-decoration: none;
-  color: #0000EE;
+  color: #8b374c;
 }
 
 .container article {
-  border: 3px dashed #000;
-  border-style: none none dashed;
+  border: 1px none #000;
 }
 
 .row {
@@ -55,9 +54,12 @@ hr {
   min-height: 0.125rem;
 }
 
-.col-1,
-.col-2 {
+.col-1, .col-2 {
   width: 96%;
+}
+
+.img {
+  width: 100%;  
 }
 
 @media only screen and (min-width: 33.75em) {
