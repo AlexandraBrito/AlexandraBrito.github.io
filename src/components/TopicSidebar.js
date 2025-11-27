@@ -2,41 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-
-// Bold color palette for topics
-const topicColors = {
-  sewing: {
-    headerBg: 'bg-[#F9BBBC]', // Dusty pink
-    text: 'text-[#472A1A]' // Dark brown text for contrast
-  },
-  code: {
-    headerBg: 'bg-[#729DC7]', // Muted blue
-    text: 'text-white'
-  },
-  gardening: {
-    headerBg: 'bg-[#A2A655]', // Sage green
-    text: 'text-white'
-  },
-  cooking: {
-    headerBg: 'bg-[#E87461]', // Coral/terracotta
-    text: 'text-white'
-  },
-  diy: {
-    headerBg: 'bg-[#FEC10F]', // Golden yellow
-    text: 'text-[#472A1A]' // Dark brown text for contrast
-  },
-  life: {
-    headerBg: 'bg-[#BBDFEE]', // Light blue
-    text: 'text-[#472A1A]' // Dark brown text for contrast
-  }
-};
-
-const getTopicColors = (topicName) => {
-  return topicColors[topicName.toLowerCase()] || {
-    headerBg: 'bg-gray-600',
-    text: 'text-white'
-  };
-};
+import { getTopicColor } from '@/lib/topicColors';
 
 function TypeSection({ typeName, posts }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -50,7 +16,7 @@ function TypeSection({ typeName, posts }) {
         <span className={`text-[var(--text-secondary)] text-[10px] transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}>
           ▶
         </span>
-        <span className="font-sans text-xs uppercase tracking-wider text-[var(--text-secondary)] group-hover:text-[var(--warm-brown)] transition-colors">
+        <span className="font-sans text-xs uppercase tracking-wider text-[var(--text-secondary)] group-hover:text-[#A2A655] transition-colors">
           {typeName} ({posts.length})
         </span>
       </button>
@@ -61,7 +27,7 @@ function TypeSection({ typeName, posts }) {
             <li key={post.slug}>
               <Link
                 href={`/blog/${post.slug}`}
-                className="font-serif text-sm text-[var(--text-primary)] hover:text-[var(--sky-blue)] transition-colors block py-0.5"
+                className="font-serif text-sm text-[var(--navy-blue)] hover:text-[#A2A655] transition-colors block py-0.5"
               >
                 {post.title}
               </Link>
@@ -76,15 +42,17 @@ function TypeSection({ typeName, posts }) {
 function TopicWidget({ topic }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const typeEntries = Object.entries(topic.types);
-  const colors = getTopicColors(topic.name);
+  const colors = getTopicColor(topic.name);
 
   return (
     <div className="mb-4 bg-white relative rounded-lg" style={{ border: '2px solid var(--navy-blue)' }}>
       {/* Topic Header Button - simple sticker style */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className={`w-full flex items-center gap-2 py-2.5 px-4 ${colors.headerBg} ${colors.text} text-left group transition-all hover:brightness-105`}
+        className="w-full flex items-center gap-2 py-2.5 px-4 text-left group transition-all hover:brightness-105"
         style={{
+          backgroundColor: colors.bg,
+          color: colors.text,
           borderBottom: isExpanded ? '2px solid var(--navy-blue)' : 'none'
         }}
       >

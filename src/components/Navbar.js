@@ -6,7 +6,7 @@ export default function Navbar() {
       <div className="max-w-5xl mx-auto px-6 py-6">
         <div className="flex justify-between items-center">
           {/* Logo/Brand */}
-          <Link href="/" className="font-sans text-2xl font-bold text-[var(--soft-brown)] hover:text-[var(--warm-brown)] transition">
+          <Link href="/" className="font-sans text-2xl font-bold text-[var(--navy-blue)] hover:text-[var(--sky-blue)] transition">
             Alexandra Brito
           </Link>
 
@@ -17,9 +17,6 @@ export default function Navbar() {
             </Link>
             <Link href="/about" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition">
               About
-            </Link>
-            <Link href="/contact" className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] transition">
-              Contact
             </Link>
           </div>
         </div>
