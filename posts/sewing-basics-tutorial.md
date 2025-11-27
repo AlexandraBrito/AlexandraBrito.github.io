@@ -4,6 +4,7 @@ date: "2024-04-20"
 topic: "sewing"
 type: "tutorial"
 excerpt: "A beginner's guide to understanding sewing patterns and their markings"
+image: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?w=800&q=80"
 tags:
   - beginner
   - tutorial

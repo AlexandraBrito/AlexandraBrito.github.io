@@ -11,7 +11,7 @@ export default function About() {
       </section>
 
       {/* Content */}
-      <main className="max-w-3xl mx-auto bg-white border border-[var(--warm-brown)]/20 p-8 md:p-12 my-12">
+      <main className="max-w-3xl mx-auto bg-white p-8 md:p-12 my-12 rounded-xl" style={{ border: '2px solid var(--navy-blue)' }}>
         <div className="prose prose-lg max-w-none
                         prose-headings:font-serif prose-headings:font-bold prose-headings:text-[var(--soft-brown)]
                         prose-h2:text-3xl prose-h2:mt-8 prose-h2:mb-4

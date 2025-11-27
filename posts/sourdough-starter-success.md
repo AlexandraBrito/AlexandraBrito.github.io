@@ -5,6 +5,7 @@ topic: "cooking"
 type: "project-log"
 project: "sourdough-journey"
 excerpt: "After three failed attempts, I finally got my sourdough starter bubbling and baking beautiful bread"
+image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800&q=80"
 tags:
   - sourdough
   - bread-baking

@@ -5,6 +5,7 @@ topic: "sewing"
 type: "project-log"
 project: "summer-dress-2024"
 excerpt: "A journey from pattern selection to the final stitch. Learn about the challenges and triumphs of creating a custom summer dress."
+image: "https://images.unsplash.com/photo-1618333258768-dffc65229268?w=800&q=80"
 tags:
   - beginner
   - dress

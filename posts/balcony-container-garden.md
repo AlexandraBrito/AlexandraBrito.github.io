@@ -5,6 +5,7 @@ topic: "gardening"
 type: "project-log"
 project: "balcony-garden-2024"
 excerpt: "Growing vegetables and herbs in small spaces - tips for maximizing your urban garden potential"
+image: "https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?w=800&q=80"
 tags:
   - container-gardening
   - urban-gardening

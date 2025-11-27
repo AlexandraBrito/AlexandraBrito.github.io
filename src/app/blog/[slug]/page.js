@@ -16,7 +16,7 @@ export default async function BlogPost({ params }) {
 
   return (
     <div className="min-h-screen bg-[var(--warm-white)]">
-      <article className="max-w-3xl mx-auto bg-white border border-[var(--warm-brown)]/20 p-8 md:p-12 my-12">
+      <article className="max-w-3xl mx-auto bg-white p-8 md:p-12 my-12 rounded-xl" style={{ border: '2px solid var(--navy-blue)' }}>
         {/* Post Header */}
         <header className="mb-10 border-b border-[var(--warm-brown)]/20 pb-8">
           <div className="flex items-center gap-4 mb-6">
@@ -52,12 +52,15 @@ export default async function BlogPost({ params }) {
                         prose-img:border prose-img:border-[var(--warm-brown)]/20">
           <ReactMarkdown
             components={{
-              // Custom image renderer
+              // Custom image renderer with border
               img: ({node, ...props}) => (
                 <span className="block my-8">
                   <img
                     {...props}
-                    className="border border-[var(--warm-brown)]/20 w-full h-auto"
+                    className="w-full h-auto rounded-sm"
+                    style={{
+                      border: '2px solid var(--navy-blue)'
+                    }}
                     loading="lazy"
                   />
                   {props.alt && (

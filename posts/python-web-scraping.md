@@ -4,6 +4,7 @@ date: "2024-10-05"
 topic: "code"
 type: "tutorial"
 excerpt: "Learn the basics of web scraping with Python and BeautifulSoup"
+image: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80"
 tags:
   - python
   - web-scraping

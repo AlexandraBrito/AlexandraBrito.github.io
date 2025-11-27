@@ -13,6 +13,7 @@
 
   /* Personality accent colors */
   --sky-blue: #75a7e8;
+  --navy-blue: #2c5282;
   --sunny-yellow: #ffbd59;
 }
 
@@ -28,6 +29,7 @@
   --color-dusty-rose: var(--dusty-rose);
   --color-warm-gold: var(--warm-gold);
   --color-sky-blue: var(--sky-blue);
+  --color-navy-blue: var(--navy-blue);
   --color-sunny-yellow: var(--sunny-yellow);
 }
 

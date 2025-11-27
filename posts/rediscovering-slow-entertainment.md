@@ -4,6 +4,7 @@ date: "2025-11-13"
 topic: "life"
 type: "essay"
 excerpt: "Breaking phone addiction and moving into more rewarding physical hobbies"
+image: "https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&q=80"
 tags:
   - analog-living
   - slow-entertainment

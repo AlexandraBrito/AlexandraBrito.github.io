@@ -1,110 +1,173 @@
 import Link from 'next/link';
-import { getAllPosts } from '@/lib/posts';
+import { getAllPosts, getTopicsWithTypes, getPostsByArchive } from '@/lib/posts';
+import TopicSidebar from '@/components/TopicSidebar';
 
-export default function Home() {
+// Bold colors matching sidebar
+const topicDoodles = {
+  sewing: { emoji: '🧵', color: '#F9BBBC', bgColor: 'rgba(249, 187, 188, 0.15)' },
+  code: { emoji: '💻', color: '#729DC7', bgColor: 'rgba(114, 157, 199, 0.15)' },
+  gardening: { emoji: '🌱', color: '#A2A655', bgColor: 'rgba(162, 166, 85, 0.15)' },
+  cooking: { emoji: '🍳', color: '#E87461', bgColor: 'rgba(232, 116, 97, 0.15)' },
+  diy: { emoji: '🔨', color: '#FEC10F', bgColor: 'rgba(254, 193, 15, 0.15)' },
+  life: { emoji: '✨', color: '#BBDFEE', bgColor: 'rgba(187, 223, 238, 0.15)' }
+};
+
+// Variations for random tag styling
+const tagSizes = ['text-[10px]', 'text-[11px]', 'text-xs'];
+const tagPaddings = ['px-3 py-1.5', 'px-3 py-2', 'px-3.5 py-2', 'px-4 py-2', 'px-4 py-2.5'];
+const tagPositions = [
+  { top: '-top-3', left: '-left-3', right: 'auto', bottom: 'auto' },
+  { top: '-top-3', right: '-right-3', left: 'auto', bottom: 'auto' },
+  { top: '-top-4', left: 'left-6', right: 'auto', bottom: 'auto' },
+  { top: '-top-4', right: 'right-6', left: 'auto', bottom: 'auto' }
+];
+
+// Generate consistent but random-looking variations based on post slug
+const getRandomStyle = (seed) => {
+  // Simple hash function to generate consistent "random" values from string
+  let hash = 0;
+  for (let i = 0; i < seed.length; i++) {
+    hash = ((hash << 5) - hash) + seed.charCodeAt(i);
+    hash = hash & hash;
+  }
+
+  const rotation = ((hash % 14) - 7); // -7 to +7 degrees
+  const sizeIndex = Math.abs(hash % tagSizes.length);
+  const paddingIndex = Math.abs((hash >> 2) % tagPaddings.length);
+  const positionIndex = Math.abs((hash >> 6) % tagPositions.length);
+
+  return {
+    rotation: `${rotation}deg`,
+    size: tagSizes[sizeIndex],
+    padding: tagPaddings[paddingIndex],
+    position: tagPositions[positionIndex]
+  };
+};
+
+const getTopicDoodle = (topic, slug) => {
+  const topicData = topicDoodles[topic?.toLowerCase()] || { emoji: '📌', color: '#8b6f47', bgColor: 'rgba(139, 111, 71, 0.15)' };
+  const style = getRandomStyle(slug);
+  return { ...topicData, ...style };
+};
+
+export default function Blog() {
   const posts = getAllPosts();
-  const featuredPosts = posts.slice(0, 3); // Get 3 most recent posts
+  const topics = getTopicsWithTypes();
+  const archives = getPostsByArchive();
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="bg-[var(--cream)] border-b border-[var(--warm-brown)]/20">
-        <div className="max-w-4xl mx-auto px-6 py-16 md:py-24">
-          <h1 className="font-serif text-5xl md:text-6xl font-bold text-[var(--soft-brown)] mb-6 leading-tight">
-            Welcome to My World
-          </h1>
-          <p className="font-serif text-xl md:text-2xl text-[var(--text-secondary)] leading-relaxed max-w-2xl">
-            A place where threads meet code, gardens bloom, and recipes come alive.
-            Join me as I document my adventures in making, creating, and learning.
-          </p>
-        </div>
-      </section>
+    <div className="min-h-screen bg-[var(--warm-white)]">
+      {/* Posts Listing with Sidebar */}
+      <section className="py-16">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex gap-8">
+            {/* Sidebar - LEFT of content */}
+            <div className="hidden lg:block lg:w-64 flex-shrink-0">
+              {/* <div className="sticky top-6"> */}
+                <TopicSidebar topics={topics} archives={archives} />
+              {/* </div> */}
+            </div>
 
-      {/* Featured Posts Section */}
-      <section className="bg-[var(--warm-white)] py-16">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="font-sans text-sm uppercase tracking-widest text-[var(--warm-brown)] mb-8 font-semibold">
-            Recent Posts
-          </h2>
+            {/* Main Content */}
+            <div className="flex-1 max-w-3xl">
+              <div className="space-y-12">
+                {posts.map((post) => {
+                  const doodle = getTopicDoodle(post.topic || post.category, post.slug);
 
-          <div className="space-y-8">
-            {featuredPosts.map((post, index) => (
-              <article key={post.slug} className={`${index === 0 ? 'border-[var(--warm-brown)]/30 border-2' : 'border-[var(--warm-brown)]/20 border'} bg-white p-8 hover:border-[var(--warm-gold)] transition-all`}>
-                <Link href={`/blog/${post.slug}`}>
-                  <div>
-                    <div className="flex items-center gap-3 mb-3">
-                      <span className="font-sans text-xs uppercase tracking-wider text-[var(--warm-gold)] font-semibold">
-                        {post.topic || post.category}
-                      </span>
-                      {post.type && (
-                        <span className="font-sans text-xs tracking-wider text-[var(--text-secondary)]">
-                          • {post.type}
-                        </span>
-                      )}
-                      <span className="text-[var(--text-secondary)] text-sm">
-                        {post.date}
-                      </span>
+                  return (
+                  <article
+                    key={post.slug}
+                    className="bg-white p-8 md:p-10 transition-all group relative rounded-3xl overflow-visible"
+                    style={{
+                      border: '2px solid var(--navy-blue)'
+                    }}
+                  >
+                    {/* Topic sticker badge */}
+                    <div
+                      className={`absolute ${doodle.position.top} ${doodle.position.left} ${doodle.position.right} ${doodle.position.bottom} font-sans ${doodle.size} uppercase tracking-widest font-black ${doodle.padding} shadow-lg transition-transform group-hover:scale-105 z-10`}
+                      style={{
+                        transform: `rotate(${doodle.rotation})`,
+                        backgroundColor: doodle.color,
+                        color: (post.topic === 'sewing' || post.topic === 'diy' || post.topic === 'life') ? '#472A1A' : 'white',
+                        border: '2px solid #2c5282'
+                      }}
+                    >
+                      {post.topic || post.category}
                     </div>
 
-                    <h3 className={`font-serif ${index === 0 ? 'text-3xl md:text-4xl' : 'text-2xl md:text-3xl'} font-bold text-[var(--soft-brown)] mb-3 hover:text-[var(--warm-brown)] transition leading-tight`}>
-                      {post.title}
-                    </h3>
+                    {/* Topic-related emoji/doodle */}
+                    <div
+                      className="absolute -bottom-3 -right-3 text-2xl opacity-80 transition-transform"
+                      style={{
+                        transform: `rotate(${parseInt(doodle.rotation) * -1}deg)`,
+                        filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))'
+                      }}
+                    >
+                      {doodle.emoji}
+                    </div>
 
-                    <p className="font-serif text-lg text-[var(--text-secondary)] leading-relaxed mb-4">
-                      {post.excerpt}
+                    <Link href={`/blog/${post.slug}`}>
+                      <div className="flex gap-6">
+                        {/* Content */}
+                        <div className="flex-1">
+                          {/* Metadata */}
+                          <div className="flex items-center gap-4 mb-4">
+                            <span className="font-sans text-xs uppercase tracking-wider text-[var(--text-secondary)]">
+                              {post.topic || post.category}
+                            </span>
+                            {post.type && (
+                              <span className="font-sans text-xs tracking-wider text-[var(--text-secondary)]">
+                                • {post.type}
+                              </span>
+                            )}
+                            <span className="text-[var(--text-secondary)] text-sm font-serif">
+                              {post.date}
+                            </span>
+                          </div>
+
+                          {/* Title */}
+                          <h2 className="font-serif text-xl md:text-2xl font-bold text-[var(--soft-brown)] mb-2 group-hover:text-[var(--warm-brown)] transition truncate">
+                            {post.title}
+                          </h2>
+
+                          {/* Excerpt */}
+                          <p className="font-serif text-sm text-[var(--text-secondary)] leading-relaxed mb-4 line-clamp-2">
+                            {post.excerpt}
+                          </p>
+
+                          {/* Read More Link */}
+                          <span className="font-sans text-sm text-[var(--sky-blue)] font-medium group-hover:text-[var(--sunny-yellow)] transition inline-flex items-center gap-2">
+                            Read full post
+                            <span className="group-hover:translate-x-1 transition-transform">→</span>
+                          </span>
+                        </div>
+
+                        {/* Featured Image - Side (Substack style) */}
+                        {post.featuredImage && (
+                          <div className="flex-shrink-0">
+                            <img
+                              src={post.featuredImage}
+                              alt={post.title}
+                              className="w-48 h-32 object-cover"
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </Link>
+                  </article>
+                  );
+                })}
+
+                {/* No posts message */}
+                {posts.length === 0 && (
+                  <div className="text-center py-16">
+                    <p className="font-serif text-xl text-[var(--text-secondary)]">
+                      No posts yet. Check back soon!
                     </p>
-
-                    <span className="font-sans text-sm text-[var(--warm-brown)] font-medium hover:text-[var(--warm-gold)] transition">
-                      Read more →
-                    </span>
                   </div>
-                </Link>
-              </article>
-            ))}
-          </div>
-
-          <div className="mt-12 text-center">
-            <Link href="/blog" className="inline-block font-sans text-sm uppercase tracking-wider bg-[var(--warm-gold)] text-[var(--soft-brown)] px-8 py-3 hover:bg-[var(--warm-brown)] hover:text-white transition font-semibold">
-              View All Posts
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Categories Section */}
-      <section className="bg-[var(--cream)] py-16 border-t border-[var(--warm-brown)]/20">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="font-sans text-sm uppercase tracking-widest text-[var(--warm-brown)] mb-8 font-semibold">
-            Explore by Interest
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Link href="/blog" className="group bg-white border border-[var(--warm-brown)]/20 p-8 hover:border-[var(--dusty-rose)] hover:bg-[var(--dusty-rose)]/5 transition">
-              <h3 className="font-sans text-xl font-bold text-[var(--soft-brown)] mb-2 group-hover:text-[var(--warm-brown)] transition">
-                Sewing
-              </h3>
-              <p className="font-serif text-[var(--text-secondary)]">
-                Patterns, projects & fabric finds
-              </p>
-            </Link>
-
-            <Link href="/blog" className="group bg-white border border-[var(--warm-brown)]/20 p-8 hover:border-[var(--warm-gold)] hover:bg-[var(--warm-gold)]/5 transition">
-              <h3 className="font-sans text-xl font-bold text-[var(--soft-brown)] mb-2 group-hover:text-[var(--warm-brown)] transition">
-                Code
-              </h3>
-              <p className="font-serif text-[var(--text-secondary)]">
-                Web dev & tech adventures
-              </p>
-            </Link>
-
-            <Link href="/blog" className="group bg-white border border-[var(--warm-brown)]/20 p-8 hover:border-[var(--warm-brown)] hover:bg-[var(--warm-brown)]/5 transition">
-              <h3 className="font-sans text-xl font-bold text-[var(--soft-brown)] mb-2 group-hover:text-[var(--warm-brown)] transition">
-                Gardening
-              </h3>
-              <p className="font-serif text-[var(--text-secondary)]">
-                Growing green & eating fresh
-              </p>
-            </Link>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </section>

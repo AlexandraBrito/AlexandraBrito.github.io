@@ -3,44 +3,65 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-// Very subtle background colors for each topic
+// Bold color palette for topics
 const topicColors = {
-  sewing: 'bg-pink-50/30',
-  code: 'bg-amber-50/30',
-  gardening: 'bg-green-50/30',
-  cooking: 'bg-orange-50/30',
-  diy: 'bg-stone-50/30',
-  life: 'bg-purple-50/30'
+  sewing: {
+    headerBg: 'bg-[#F9BBBC]', // Dusty pink
+    text: 'text-[#472A1A]' // Dark brown text for contrast
+  },
+  code: {
+    headerBg: 'bg-[#729DC7]', // Muted blue
+    text: 'text-white'
+  },
+  gardening: {
+    headerBg: 'bg-[#A2A655]', // Sage green
+    text: 'text-white'
+  },
+  cooking: {
+    headerBg: 'bg-[#E87461]', // Coral/terracotta
+    text: 'text-white'
+  },
+  diy: {
+    headerBg: 'bg-[#FEC10F]', // Golden yellow
+    text: 'text-[#472A1A]' // Dark brown text for contrast
+  },
+  life: {
+    headerBg: 'bg-[#BBDFEE]', // Light blue
+    text: 'text-[#472A1A]' // Dark brown text for contrast
+  }
 };
 
-const getTopicColor = (topicName) => {
-  return topicColors[topicName.toLowerCase()] || 'bg-gray-50/30';
+const getTopicColors = (topicName) => {
+  return topicColors[topicName.toLowerCase()] || {
+    headerBg: 'bg-gray-600',
+    text: 'text-white'
+  };
 };
 
 function TypeSection({ typeName, posts }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
-    <div className="pl-3">
+    <div className="my-1">
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center gap-1 py-1 group text-left"
+        className="w-full flex items-center gap-2 py-1 group text-left transition-all"
       >
-        <span className={`text-[var(--text-secondary)] text-xs transition-transform ${isExpanded ? 'rotate-90' : ''}`}>
+        <span className={`text-[var(--text-secondary)] text-[10px] transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`}>
           ▶
         </span>
-        <span className="font-serif text-sm text-[var(--text-primary)] group-hover:text-[var(--sunny-yellow)] transition capitalize">
+        <span className="font-sans text-xs uppercase tracking-wider text-[var(--text-secondary)] group-hover:text-[var(--warm-brown)] transition-colors">
           {typeName} ({posts.length})
         </span>
       </button>
 
       {isExpanded && (
-        <ul className="pl-4 space-y-1 mt-1">
+        <ul className="pl-5 space-y-0.5 mt-1">
           {posts.map(post => (
             <li key={post.slug}>
               <Link
                 href={`/blog/${post.slug}`}
-                className="font-serif text-sm text-[var(--text-primary)] hover:text-[var(--sky-blue)] transition block py-1"
+                className="font-serif text-sm text-[var(--text-primary)] hover:text-[var(--sky-blue)] transition-colors block py-0.5"
               >
                 {post.title}
               </Link>
@@ -55,26 +76,29 @@ function TypeSection({ typeName, posts }) {
 function TopicWidget({ topic }) {
   const [isExpanded, setIsExpanded] = useState(false);
   const typeEntries = Object.entries(topic.types);
+  const colors = getTopicColors(topic.name);
 
   return (
-    <div className="py-1">
-      {/* Topic Header - Clickable */}
+    <div className="mb-4 bg-white relative rounded-lg" style={{ border: '2px solid var(--navy-blue)' }}>
+      {/* Topic Header Button - simple sticker style */}
       <button
         onClick={() => setIsExpanded(!isExpanded)}
-        className="w-full flex items-center gap-1 group text-left"
+        className={`w-full flex items-center gap-2 py-2.5 px-4 ${colors.headerBg} ${colors.text} text-left group transition-all hover:brightness-105`}
+        style={{
+          borderBottom: isExpanded ? '2px solid var(--navy-blue)' : 'none'
+        }}
       >
-        <span className={`text-[var(--text-primary)] transition-transform ${isExpanded ? 'rotate-90' : ''}`}>
+        <span className={`transition-transform duration-200 text-sm ${isExpanded ? 'rotate-90' : ''}`}>
           ▶
         </span>
-        <h3 className="font-serif text-base font-semibold text-[var(--text-primary)] capitalize group-hover:text-[var(--sunny-yellow)] transition">
+        <h3 className="font-sans text-sm font-bold uppercase tracking-widest">
           {topic.name} ({topic.totalPosts})
         </h3>
       </button>
 
       {/* Expanded Content */}
       {isExpanded && (
-        <div className="mt-1 space-y-1">
-          {/* Types with Posts - Each expandable */}
+        <div className="px-4 py-3">
           {typeEntries.map(([typeName, posts]) => (
             <TypeSection
               key={typeName}
@@ -90,15 +114,10 @@ function TopicWidget({ topic }) {
 
 export default function TopicSidebar({ topics, archives }) {
   return (
-    <aside>
-      {/* Single container for all topics */}
-      <div className="bg-white border border-[var(--warm-brown)]/20 p-4">
-        <div className="space-y-2">
-          {topics.map(topic => (
-            <TopicWidget key={topic.name} topic={topic} />
-          ))}
-        </div>
-      </div>
+    <aside className="space-y-0">
+      {topics.map(topic => (
+        <TopicWidget key={topic.name} topic={topic} />
+      ))}
     </aside>
   );
 }

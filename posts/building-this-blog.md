@@ -5,6 +5,7 @@ topic: "code"
 type: "project-log"
 project: "personal-blog"
 excerpt: "How I built a custom blog using Next.js, React, and Markdown"
+image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&q=80"
 tags:
   - nextjs
   - react

@@ -23,9 +23,19 @@
         // Parse metadata from file
         const { data, content } = matter(fileContents);
 
+        // Extract first image from content if no featured image in frontmatter
+        let featuredImage = data.image || null;
+        if (!featuredImage) {
+          const imageMatch = content.match(/!\[.*?\]\((.*?)\)/);
+          if (imageMatch) {
+            featuredImage = imageMatch[1];
+          }
+        }
+
         return {
           slug,
           content,
+          featuredImage,
           ...data, // title, date, category, excerpt
         };
       });
